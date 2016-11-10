@@ -1,1 +1,1 @@
-# Checkpoint1-Inverted-Index
+# inverted-index
