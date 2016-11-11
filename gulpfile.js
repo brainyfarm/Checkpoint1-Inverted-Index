@@ -7,5 +7,5 @@ gulp.task('browserSync', function() {
         server: {
             baseDir: 'src'
         }
-    })
-})
+    });
+});
