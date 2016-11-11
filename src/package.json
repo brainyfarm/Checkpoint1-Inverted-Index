@@ -1,0 +1,26 @@
+{
+  "name": "checkpoint1-inverted-index",
+  "version": "1.0.0",
+  "description": "Inverted index",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.17.5",
+    "gulp": "^3.9.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainyfarm/Checkpoint1-Inverted-Index.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brainyfarm/Checkpoint1-Inverted-Index/issues"
+  },
+  "homepage": "https://github.com/brainyfarm/Checkpoint1-Inverted-Index#readme"
+}
