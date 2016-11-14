@@ -1,0 +1,42 @@
+body{
+    background-color: teal;
+    color: #FFF;
+    font-family: Raleway, cursive;
+    text-transform: none !important;
+}
+
+.teal-bg{
+    background-color: teal;
+    height: 400px;
+    border: 1px solid #FFF 
+}
+body h2{
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 5px;
+    width: inherit;
+}
+.wrapper{
+    margin-top: 20px;
+}
+.head{
+    margin: 0 auto;
+    float: none;
+}
+.add-btn{
+    float: none;
+}
+.nav-wrapper{
+    padding: 5px;
+    font-family: 'Playfair Display', serif;
+}
+.brand-logo{
+    letter-spacing: 0.1em;
+}
+.collection-item{
+    margin-bottom: 5px !important;
+}
+
+.btn{
+    text-transform: none !important;
+}

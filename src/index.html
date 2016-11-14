@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Playfair+Display:700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+<nav> 
+        
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo"> Inverted Index</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <!--   <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+    -->
+        <form>
+          <input id="search" type="search" placeholder="Search here" required>
+      </form>
+
+      </ul>
+    </div>
+  </nav>
+
+
+    <div class="wrapper">
+        <div class="row">
+            <div class="col s12 head">
+                <h class="white-text left">  Upload your document </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6 ">
+                <!-- Modal Trigger -->
+                <a class="waves-effect waves-light btn-large " href="#uploadModal"><span> New Document <i class="material-icons left">note_add</i></a>
+
+                <!-- Modal Structure -->
+                <div id="uploadModal" class="modal teal">
+                    <div class="modal-content">
+                        <h4> Upload Document </h4>
+                        <p>JSON format only</p>
+                        <form action="#">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Choose File</span>
+                                    <input type="file" id="fileInput">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="Choose your file">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <ul class="collection teal" id="file-collection">
+            </div>
+            <div class="col s6">
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/inverted-index.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+
+    </div>
+</body>
+
+</html>
