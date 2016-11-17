@@ -20,13 +20,13 @@ describe("Read Book Data", () => {
 
   describe("Json content should not be empty", () => {
     it("Check that uploaded JSON content is not empty", function () {
-      expect(this.myInvertedIndex.createIndex([])).toBe("Empty File");
+      expect(this.myInvertedIndex.isValidJson([])).toBeFalsy();
     });
   });
 
   describe("JSON should not be invalid", () => {
     it("Should check if content of JSON is valid", function () {
-      expect(this.myInvertedIndex.isValidJson(book)).toBeTruthy();
+      expect(this.myInvertedIndex.isValidJson(books)).toBeTruthy();
     });
   });
 
