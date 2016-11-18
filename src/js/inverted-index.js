@@ -39,12 +39,12 @@ class InvertedIndex {
    * @param {String} terms string of terms to search for 
    * @return {Object} An array of the search terms index
    */
-  searchIndex( terms ) {
+  searchIndex(terms) {
     let searchTermTokens = this.getCleanTokens(terms);
     let foundInDocuments = [];
 
-    searchTermTokens.forEach((word)=> {
-      if (this.search(word) ){
+    searchTermTokens.forEach((word) => {
+      if (this.search(word)) {
         foundInDocuments.push(this.search(word));
       }
     })
@@ -114,9 +114,9 @@ class InvertedIndex {
   search(searchTerm) {
     let indexDatabase = this.indexMap;
 
-    if( indexDatabase.hasOwnProperty(searchTerm) ){
-       return indexDatabase[searchTerm];
-    } else{
+    if (indexDatabase.hasOwnProperty(searchTerm)) {
+      return indexDatabase[searchTerm];
+    } else {
       return false;
     }
   }
