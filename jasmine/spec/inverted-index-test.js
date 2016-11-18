@@ -30,7 +30,7 @@ describe("Inverted Index Tests", () => {
 
   describe("Populate Index", () => {
     it("should return type of an object when index is properly created", () => {
-      expect(typeof myInvertedIndex.getIndex()).toBe("object");
+      expect(Object.keys(myInvertedIndex.getIndex()).length).toBeGreaterThan(0);
     });
 
     it("should return the correct of a word if mapping is properly done", () => {
