@@ -1,6 +1,5 @@
-'use strict'
 /* Setups goes here */
-const books = [
+const sampleBookData = [
   {
     "title": "Alice in Wonderland",
     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
@@ -12,58 +11,40 @@ const books = [
   }
 ];
 
+describe("Inverted Index Tests", () => {
 
-describe("Read Book Data", () => {
-  beforeEach(function () {
-    this.myInvertedIndex = new InvertedIndex();
+  describe("Read Book Data", () => {
+    myInvertedIndex = new InvertedIndex();
+    myInvertedIndex.createIndex(sampleBookData);
+
+    it("should check that JSON is not empty", () => {
+      expect(myInvertedIndex.isValidJson([])).toBeFalsy();
+    });
+
+    it("should check that content of JSON is valid", () => {
+      expect(myInvertedIndex.isValidJson(sampleBookData)).toBeTruthy();
+    });
+
   });
 
-  describe("Json content should not be empty", () => {
-    it("Check that uploaded JSON content is not empty", function () {
-      expect(this.myInvertedIndex.isValidJson([])).toBeFalsy();
+
+  describe("Populate Index", () => {
+    it("should return type of an object when index is properly created", () => {
+      expect(typeof myInvertedIndex.getIndex()).toBe("object");
+    });
+
+    it("should return the correct of a word if mapping is properly done", () => {
+      expect(myInvertedIndex.getIndex().alice).toEqual([0]);
     });
   });
 
-  describe("JSON should not be invalid", () => {
-    it("Should check if content of JSON is valid", function () {
-      expect(this.myInvertedIndex.isValidJson(books)).toBeTruthy();
+
+  describe("Search Index", () => {
+    it("should return an array of the correct document indices", () => {
+
+      expect(myInvertedIndex.search("alice")).toEqual([0]);
+      expect(myInvertedIndex.search("of")).toEqual([0, 1])
     });
   });
 
-});
-
-
-describe("Populate data", () => {
-  beforeEach(function () {
-    this.myInvertedIndex = new InvertedIndex();
-  });
-
-  describe("Ensure that index is properly created", () => {
-    it("Return an object file type when index is properly created", function () {
-      expect(typeof this.myInvertedIndex.createIndex(books)).toBe("object");
-    });
-  });
-
-  describe("Ensure string is mapped is mapped to the correct index", () => {
-    it("Return an object file type when index is properly created", function () {
-      let indexMap = this.myInvertedIndex.createIndex(books);
-      let aliceStringMapArray = indexMap.alice
-      expect(aliceStringMapArray).toEqual([0]);
-    });
-  });
-});
-
-
-describe("Search index", () => {
-  beforeEach(function () {
-    this.myInvertedIndex = new InvertedIndex();
-  });
-
-  describe("Ensure that searchIndex method returns the correct result", () => {
-    it("Should return the correct array of document indices", function () {
-      let indexMap = this.myInvertedIndex.createIndex(books);
-      let aliceSearchResult = this.searchIndex("alice");
-      expect(aliceSearchResult).toEqual([0]);
-    });
-  });
-});
+})
