@@ -1,78 +1,123 @@
 
 /* Inverted index class */
 class InvertedIndex {
+  /**
+   * @constructor
+   */
+  constructor() {
+    this.indexMap = {};
+  }
 
-    /* @constructor */
-    constructor() {
-        /* Save stuff here */
-        this.indexMap = {};
+  /**
+   * createIndex
+   * create an index map of an array of object
+   * @param {Object} jsonContent an array of objects 
+   * @return {Object} 
+   */
+  createIndex(jsonContent) {
+    if (!(this.isValidJson(jsonContent))) {
+      return "invaid json";
+    }
+    jsonContent.forEach((currentDocument, docId) => {
+      let wordsInDocument = `${currentDocument.title} ${currentDocument.text}`;
+      let currentDocumentTokens = this.getCleanTokens(wordsInDocument);
+      this.indexBot(currentDocumentTokens, docId)
+
+    });
+  }
+
+  /**
+   * getIndex
+   * @return {Object} indexMap
+   */
+  getIndex() {
+    return this.indexMap;
+  }
+
+  /**
+   * searchIndex
+   * @param {String} terms string of terms to search for 
+   * @return {Object} An array of the search terms index
+   */
+  searchIndex( terms ) {
+    let searchTermTokens = this.getCleanTokens(terms);
+    let foundInDocuments = [];
+
+    searchTermTokens.forEach((word)=> {
+      if (this.search(word) ){
+        foundInDocuments.push(this.search(word));
+      }
+    })
+    return foundInDocuments;
+  }
+
+  /* Helper methods */
+
+  /**
+   * isValidJson
+   * Check if all items in an array is a JSON valid.
+   * @param {Object} jsonArray Array of JSON objects
+   * @return {Boolean}
+   */
+  isValidJson(jsonArray) {
+    if (typeof jsonArray !== "object" || jsonArray.length === 0) {
+      return false
     }
 
-	/**
-	 * This method creates the index table
-	 * Displays the words and indices on the html
-	 */
-    createIndex(fileName, jsonContent) {
-        /* Return clean tokens of a text as an array */
-        let getCleanTokens = (string) => {
-            let invalidCharacters = /[^a-z0-9 ]/gi;
-            return string.replace(invalidCharacters, " ")
-                                    .toLowerCase()
-                                    .split(" ");
-        };
+    jsonArray.forEach((currentBook) => {
+      if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
+        return false;
+      }
+    });
+    return true;
+  }
 
-        if (jsonContent) {
-            jQuery('#file-collection').append(`<li class='collection-item teal'><h4 class='title'>${fileName}</h4></li>`);
-            try {
-                for (let index in jsonContent) {
-                    let thisDocument = jsonContent[index];
+  /**
+   * getCleanTokens
+   * sanitizes and splits a string
+   * @param {String} string string to sanitize and tokenize
+   * @return {Object} An array of clean splitted string
+   */
+  getCleanTokens(string) {
+    let invalidCharaters = /[^a-z0-9\s]/gi;
+    return string.replace(invalidCharaters, " ")
+      .toLowerCase()
+      .split(" ")
+      .filter((word) => {
+        return Boolean(word);
+      });
+  }
 
-                    let titleTokens = getCleanTokens(thisDocument.title);
-                    let textTokens = getCleanTokens(thisDocument.text);
-
-                    //$('#file-collection').append(`title: ${titleTokens} \n content: ${textTokens}`);
-                }
-
-            }
-            catch (err) {
-                //alert(err.message);
-                let userMessage = `${fileName} is not properly formatted`;
-                Materialize.toast(userMessage, 4000);
-            }
+  /**
+   * indexBot 
+   * maps an arrays their it docs index
+   * @param {Object}  tokens An array of words
+   */
+  indexBot(tokens, docId) {
+    tokens.forEach((token) => {
+      if (token in this.indexMap) {
+        if (this.indexMap[token].indexOf(docId) === -1) {
+          this.indexMap[token].push(docId);
         }
+      } else {
+        this.indexMap[token] = [docId];
+      }
+    });
+  }
+
+  /**
+   * search
+   * returns an array containing document id in which a search term exist
+   * @param {String} searchTerm A single search term string
+   * @return {Object} An array containing index of a search term
+   */
+  search(searchTerm) {
+    let indexDatabase = this.indexMap;
+
+    if( indexDatabase.hasOwnProperty(searchTerm) ){
+       return indexDatabase[searchTerm];
+    } else{
+      return false;
     }
-
-    getIndex() {
-
-    }
-
-
-	/**
-     * 
-     */
-        readFileContent(selectedFile) {
-        let acceptedFileType = "application/json";
-        let selectedFileType = selectedFile.type;
-        let selectedFileName = selectedFile.name;
-        let isValidFileType = Object.is(selectedFileType, acceptedFileType);
-        if (isValidFileType) {
-            let reader = new FileReader();
-            reader.readAsText(selectedFile);
-
-            let createIndex = this.createIndex;
-
-            reader.onload = () => {
-                var fileJSONContent = JSON.parse(reader.result);
-                // Try to create index 
-                createIndex(selectedFileName, fileJSONContent);
-
-            };
-
-        } else {
-            // Invalid file
-            let userMessage =`${selectedFileName} is not a JSON file`;
-            Materialize.toast(userMessage, 5000);
-        }
-    }
-
+  }
 }
