@@ -64,12 +64,20 @@ class InvertedIndex {
       return false
     }
 
-    jsonArray.forEach((currentBook) => {
-      if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
-        return false;
-      }
-    });
-    return true;
+    try {
+
+      jsonArray.forEach((currentBook) => {
+        if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
+          return false;
+        }
+      });
+      return true;
+
+    }
+    catch (err) {
+      return false
+    }
+
   }
 
   /**
