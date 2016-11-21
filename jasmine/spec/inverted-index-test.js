@@ -41,10 +41,13 @@ describe("Inverted Index Tests", () => {
 
   describe("Search Index", () => {
     it("should return an array of the correct document indices", () => {
-
-      expect(myInvertedIndex.search("alice")).toEqual([0]);
-      expect(myInvertedIndex.search("of")).toEqual([0, 1])
+      expect(myInvertedIndex.searchIndex("alice")).toEqual({"alice":[0]});
     });
+
+    it("should return correct result for multiple search term", () => {
+      expect(myInvertedIndex.searchIndex("alice powerful")).toEqual({"alice":[0], "powerful":[1]});
+    });
+
   });
 
 })

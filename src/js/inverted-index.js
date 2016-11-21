@@ -1,4 +1,3 @@
-
 /* Inverted index class */
 class InvertedIndex {
   /**
@@ -22,7 +21,6 @@ class InvertedIndex {
       let wordsInDocument = `${currentDocument.title} ${currentDocument.text}`;
       let currentDocumentTokens = this.getCleanTokens(wordsInDocument);
       this.indexBot(currentDocumentTokens, docId)
-
     });
   }
 
@@ -41,14 +39,14 @@ class InvertedIndex {
    */
   searchIndex(terms) {
     let searchTermTokens = this.getCleanTokens(terms);
-    let foundInDocuments = [];
+    let searchResult = {};
 
     searchTermTokens.forEach((word) => {
       if (this.search(word)) {
-        foundInDocuments.push(this.search(word));
+        searchResult[word] = this.search(word);
       }
     })
-    return foundInDocuments;
+    return Object.keys(searchResult).length === 0 ? false : searchResult;
   }
 
   /* Helper methods */
@@ -64,12 +62,20 @@ class InvertedIndex {
       return false
     }
 
-    jsonArray.forEach((currentBook) => {
-      if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
-        return false;
-      }
-    });
-    return true;
+    try {
+
+      jsonArray.forEach((currentBook) => {
+        if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
+          return false;
+        }
+      });
+      return true;
+
+    }
+    catch (err) {
+      return false
+    }
+
   }
 
   /**
@@ -121,3 +127,20 @@ class InvertedIndex {
     }
   }
 }
+
+let books = [
+  {
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  },
+
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring.",
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+  }
+]
+
+let myInvertedIndex = new InvertedIndex();
+myInvertedIndex.createIndex(books);
+myInvertedIndex.getIndex();
+console.log(myInvertedIndex.searchIndex("sfdd .alice"))
