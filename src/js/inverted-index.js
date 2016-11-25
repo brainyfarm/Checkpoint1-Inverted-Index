@@ -18,8 +18,13 @@ class InvertedIndex {
       return "invaid json";
     }
     jsonContent.forEach((currentDocument, docId) => {
-      let wordsInDocument = `${currentDocument.title} ${currentDocument.text}`;
-      let currentDocumentTokens = this.getCleanTokens(wordsInDocument);
+      let thisDocTitle = currentDocument.title;
+      let thisDocText = currentDocument.text;
+      let wordsInDocument = `${thisDocTitle} ${thisDocText}`;
+      let currentDocumentTokens = this.getCleanTokens(wordsInDocument)
+          .sort((a, b)=> {
+            a.length - b.length;
+          });
       this.indexBot(currentDocumentTokens, docId)
     });
   }
@@ -63,9 +68,10 @@ class InvertedIndex {
     }
 
     try {
-
       jsonArray.forEach((currentBook) => {
-        if (!(currentBook.hasOwnProperty("title") && currentBook.hasOwnProperty("text"))) {
+        let currentBookHasTitle = currentBook.hasOwnProperty("title");
+        let currentBookHasText = currentBook.hasOwnProperty("text");``
+        if (!(currentBookHasTitle && currentBookHasText )) {
           return false;
         }
       });
@@ -75,7 +81,6 @@ class InvertedIndex {
     catch (err) {
       return false
     }
-
   }
 
   /**
@@ -127,20 +132,3 @@ class InvertedIndex {
     }
   }
 }
-
-let books = [
-  {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
-
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-]
-
-let myInvertedIndex = new InvertedIndex();
-myInvertedIndex.createIndex(books);
-myInvertedIndex.getIndex();
-console.log(myInvertedIndex.searchIndex("sfdd .alice"))
