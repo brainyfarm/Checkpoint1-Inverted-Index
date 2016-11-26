@@ -53,8 +53,8 @@ class InvertedIndex {
   /**
    * searchIndex
    * Search for the occurrence of words in the indexMap
-   * @param {Object} fileNames An array of filenames to search
    * @param {String} searchTerms The search term(s)
+   * @param {Object} fileNames An array of filenames to search
    * @returns {Object} A map of the search result
    */
   searchIndex(searchTerms, fileNames) {
@@ -133,30 +133,3 @@ class InvertedIndex {
     }
   }
 }
-
-// const book = [
-//   {
-//     'title': 'Alice in Wonderland',
-//     'text': 'Alice falls into a rabbit hole and enters a world full of ...'
-//   },
-
-//   {
-//     'title': 'The Lord of the Rings: The Fellowship of the Ring.',
-//     'text': 'An unusual alliance of man, elf, dwarf, wizard and hobbit ...'
-//   }
-// ];
-
-// const book2 = [
-//   {
-//     'title':"Americanah",
-//     'text':"Americah was written by Chimmanda of Nigeria"
-//   }
-// ]
-
-// myInvertedIndex = new InvertedIndex();
-// myInvertedIndex.storeFile('book.json', book);
-// myInvertedIndex.storeFile('book2.json', book2);
-// myInvertedIndex.createIndex('book.json');
-// myInvertedIndex.createIndex('book2.json');
-
-// console.log(myInvertedIndex.searchIndex("alice"))
