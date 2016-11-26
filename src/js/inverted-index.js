@@ -6,16 +6,14 @@ class InvertedIndex {
    * @constructor
    */
   constructor() {
-    // Contains filenames as keys and content as value
     this.files = {};
-    // Contains fileName as keys and contents as value
     this.indexMap = {};
   }
 
   /**
    * createIndex
-   * @param {Object} jsonContent an array of objects
-   * @return {Object} undefined
+   * @param {Object} fileName name of file to map index for
+   * @return {Boolean} false if index is not created
    */
   createIndex(fileName) {
     if (Object.hasOwnProperty.call(this.files, fileName)) {
@@ -44,38 +42,44 @@ class InvertedIndex {
 
   /**
    * getIndex
-   * @return {Object} indexMap
+   * Returns index map of a file
+   * @param {String} fileName name of file to return index map
+   * @return {Object} a key pair value of file index map
    */
   getIndex(fileName) {
     return this.indexMap[fileName];
   }
 
-
-searchIndex(fileNames, searchTerms) {
-  this.result = {};
-  const allSearchTerms = this.getCleanTokens(searchTerms);
-
-  allSearchTerms.forEach((term) => {
-    const allFiles = Object.keys(this.indexMap);
-    fileNames.forEach((currentFile) => {
-      if (Object.hasOwnProperty.call(this.indexMap[currentFile], term)) {
-        if (term in this.result) {
-          this.result[term][currentFile] = this.indexMap[currentFile][term];
-        } else {
-          this.result[term] = { };
-          this.result[term][currentFile] = this.indexMap[currentFile][term];
+  /**
+   * searchIndex
+   * Search for the occurrence of words in the indexMap
+   * @param {Object} fileNames An array of filenames to search
+   * @param {String} searchTerms The search term(s)
+   * @returns {Object} A map of the search result
+   */
+  searchIndex(searchTerms, fileNames) {
+    fileNames = fileNames || Object.keys(this.files);
+    this.result = {};
+    const allSearchTerms = this.getCleanTokens(searchTerms);
+    allSearchTerms.forEach((term) => {
+      fileNames.forEach((currentFile) => {
+        if (Object.hasOwnProperty.call(this.indexMap[currentFile], term)) {
+          if (term in this.result) {
+            this.result[term][currentFile] = this.indexMap[currentFile][term];
+          } else {
+            this.result[term] = {};
+            this.result[term][currentFile] = this.indexMap[currentFile][term];
+          }
         }
-      }
+      });
     });
-  });
-  return this.result;
-}
+    return Object.keys(this.result).length > 0 ? this.result : false;
+  }
 
   /**
    * getCleanTokens
    * get an array of tokens from a string
    * @param {String} string string to be generate token from
-   * @memberOf InvertedIndex
    * @return {Object} An array of the generated token
    */
   getCleanTokens(string) {
@@ -88,55 +92,71 @@ searchIndex(fileNames, searchTerms) {
       ));
   }
 
+  /**
+   * storeFile
+   * stores file name and content
+   * @param {String} fileName name of file
+   * @param {Object} fileContent An array of file content
+   * @return {Boolean} status of file storing operation
+   */
   storeFile(fileName, fileContent) {
     this.alreadyInStore = Object.hasOwnProperty.call(this.files, fileName);
     if (!this.fileAlreadyInStore) {
       this.files[fileName] = fileContent;
-    } else {
+      return true;
+    }
+  }
+
+  /**
+   * isValidJSON
+   * verifies if a JSON file is properly formatted
+   * @param {Object} JSONContent content of JSON to check for validity
+   * @return {Boolean} validity status of the JSON content.
+   */
+  isValidJSON(JSONContent) {
+    this.JSONContent = JSONContent;
+    if (typeof JSONContent !== 'object' || JSONContent.length === 0) {
+      return false;
+    }
+
+    try {
+      JSONContent.forEach((thisBook) => {
+        const HasTitle = Object.hasOwnProperty.call(thisBook, 'title');
+        const HasText = Object.hasOwnProperty.call(thisBook, 'text');
+        if (!(HasTitle && HasText)) {
+          return false;
+        }
+      });
+      return true;
+    } catch (err) {
       return false;
     }
   }
-
-  isValidJSON(JSONContent) {
-    const JSONLength = JSONContent.length;
-    for (let fileIndex = 0; fileIndex < JSONLength; fileIndex += 1) {
-      const document = JSONContent[fileIndex];
-      const docHasTitle = Object.hasOwnProperty.call(document, 'title');
-      const docHasText = Object.hasOwnProperty.call(document, 'text');
-      if (!docHasTitle || !docHasText) {
-        return false;
-      }
-    }
-    return true;
-  }
-
 }
-const sampleBook = [
-  {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
 
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-]
+// const book = [
+//   {
+//     'title': 'Alice in Wonderland',
+//     'text': 'Alice falls into a rabbit hole and enters a world full of ...'
+//   },
 
-const sampleBook2 = [
-  {
-    "title": "Animal Farm of",
-    "text": "All animals are equal but some animals are equal than others - George Orwell"
-  }
-];
+//   {
+//     'title': 'The Lord of the Rings: The Fellowship of the Ring.',
+//     'text': 'An unusual alliance of man, elf, dwarf, wizard and hobbit ...'
+//   }
+// ];
 
+// const book2 = [
+//   {
+//     'title':"Americanah",
+//     'text':"Americah was written by Chimmanda of Nigeria"
+//   }
+// ]
 
-const myInvertedIndex = new InvertedIndex();
-myInvertedIndex.storeFile('book.json', sampleBook);
-myInvertedIndex.createIndex("book.json");
-myInvertedIndex.storeFile('book2.json', sampleBook2);
-myInvertedIndex.createIndex("book2.json");
-//console.log(myInvertedIndex.isValidJSON(sampleBook));
-// console.log(myInvertedIndex.indexMap);
+// myInvertedIndex = new InvertedIndex();
+// myInvertedIndex.storeFile('book.json', book);
+// myInvertedIndex.storeFile('book2.json', book2);
+// myInvertedIndex.createIndex('book.json');
+// myInvertedIndex.createIndex('book2.json');
 
-console.log(myInvertedIndex.searchIndex(["book.json",  "book2.json"],"of alice lord animals full of wonderland imagination"));
+// console.log(myInvertedIndex.searchIndex("alice"))
