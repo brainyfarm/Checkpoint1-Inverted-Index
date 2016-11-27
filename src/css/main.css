@@ -15,12 +15,74 @@ header, footer{
   margin-left: 10px;
 }
 
+.action-box{
+  margin: 0 auto !important;
+  float: none;
+  margin-top: 80px !important;
+}
+
+.file-actions{
+display: block !important;
+}
+.search-action{
+  right: 0 !important;
+}
+
+/*
+.index-table-place{
+  height: 400px;
+  overflow: scroll;
+}
+*/
+
+table{
+  padding: 20px;
+}
+
+table thead th{
+  font-size: 22px;
+}
+table tbody tr{
+  font-size: 18px;
+  text-transform: capitalize;
+}
+
+.collapsible-header{
+  font-weight: bolder;
+}
+.collapsible-body{
+  height: 300px;
+  overflow: scroll;
+}
+
+.checkbox{
+  display: inline-block;
+  padding-left: 15px !important;
+}
+.card{
+  padding: 10px;
+}
+
+.result-place{
+  height: 230px;
+  overflow: scroll;
+}
+
+
 header{
   font-family: 'Times New Roman', Times, serif;
+  top: 0;
+  width: 100%;
+}
+.justify{
+  text-align: justify;
+  word-spacing: 0.9em;
+  line-height: 22px;
 }
 section{
   flex: 1 0 auto;
-  padding: 30px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 #search{
@@ -45,4 +107,5 @@ footer {
   text-align: center;
   bottom:0;
   width:100%;
+  position: fixed;
 }
