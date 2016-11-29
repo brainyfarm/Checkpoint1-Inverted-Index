@@ -30,7 +30,7 @@
         <div class="top">
 
           <div class="col s6 file-action">
-            <h5> Upload a JSON document </h5>
+            <h5> Upload document </h5>
 
             <form action="#">
               <div class="file-field input-field">
@@ -55,12 +55,8 @@
               <label for="search"></label>
             </div>
             <div class="">              
-                <!-- <p class="checkbox">
-                <input type="checkbox" id="all-files" checked="true" disabled/>
-                <label for="all-files">All Files </label>
-              </p> -->
               <p class="checkbox" ng-repeat="file in indexedFiles">
-                <input type="checkbox" id="{{ file }}" checked="false" />
+                <input type="checkbox" id="{{ file }}" onchange="alert('changed')"/>
                 <label for="{{ file }}">{{ file }} </label>
               </p>
             </div>
