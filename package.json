@@ -4,8 +4,9 @@
   "description": "Inverted index",
   "main": "index.js",
   "dependencies": {
-    "coveralls": "^2.11.15",
     "browser-sync": "^2.18.2",
+    "coveralls": "^2.11.15",
+    "dotenv": "^2.0.0",
     "gulp": "^3.9.1",
     "jasmine-core": "^2.5.2"
   },

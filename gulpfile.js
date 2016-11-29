@@ -7,7 +7,8 @@ const browserSync = require('browser-sync').create();
 gulp.task('browser-sync', () => {
   browserSync.init({
     server: './src/',
-    port: 3030
+    port: process.env.PORT || 3400,
+    open: false
   });
 });
 
