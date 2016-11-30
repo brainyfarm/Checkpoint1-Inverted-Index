@@ -54,9 +54,9 @@
               <input type="search" id="search" placeholder="search">
               <label for="search"></label>
             </div>
-            <div class="">              
+            <div class="">
               <p class="checkbox" ng-repeat="file in indexedFiles">
-                <input type="checkbox" id="{{ file }}" onchange="alert('changed')"/>
+                <input type="checkbox" id="{{ file }}" disabled checked="true" />
                 <label for="{{ file }}">{{ file }} </label>
               </p>
             </div>
@@ -109,24 +109,22 @@
       </div>
 
       <div class="col s6 result-place">
-        <!-- {{ liveSearchResult }} -->
-        <p class="" ng-if="liveSearchKeys.length > 0">  
-                      <span class="teal-text"> 
+        <p class="" ng-if="liveSearchKeys.length > 0">
+          <span class="teal-text"> 
                         <strong>
                         {{ liveSearchKeys.length }} 
                         </strong>
-                      </span>
-                         word(s) found  
-                        </p>
+                      </span> word(s) found
+        </p>
 
 
         <div class="card teal" ng-repeat="(word, result) in liveSearchResult">
           <div class="card-title"> {{ word }} </div>
           <hr class="divider" />
-          <div class="" ng-repeat="(filename, docIDs) in result"> 
-            <p> File: <strong> {{ filename }} </strong> 
-            <br />
-            <span class="" ng-repeat="thisId in docIDs"> 
+          <div class="" ng-repeat="(filename, docIDs) in result">
+            <p> File: <strong> {{ filename }} </strong>
+              <br />
+              <span class="" ng-repeat="thisId in docIDs"> 
                {{ 'Document '+thisId }}  <br />
                  {{ myInvertedIndex.files[filename][thisId].title
                     .toLowerCase()
@@ -140,7 +138,7 @@
           </div>
         </div>
       </div>
-                    
+
 
     </div>
 
