@@ -10,7 +10,6 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.indexedFiles = [];
 
   $scope.getBookDocs = (fileName) => {
-    console.log(fileName);
     const fileLength = $scope.myInvertedIndex.files[fileName].length;
     return Array.from({ length: fileLength }, (value, key) => key);
   };
@@ -18,9 +17,9 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.indexFile = () => {
     $scope.myInvertedIndex.createIndex($scope.currentFileName);
     $scope.indexTable = $scope.myInvertedIndex.indexMap;
-      $scope.indexTableFiles.push($scope.currentFileName);
-      $scope.indexedFiles.push($scope.currentFileName);
-      $scope.currentFileName = '';
+    $scope.indexTableFiles.push($scope.currentFileName);
+    $scope.indexedFiles.push($scope.currentFileName);
+    $scope.currentFileName = '';
   };
 
   /* Validate JSON, read and store file  */
@@ -49,7 +48,6 @@ indexApp.controller('indexCtrl', ($scope) => {
     const selectedFile = e.target.files[0];
     const acceptedFileType = 'application/json';
     const selectedFileType = selectedFile.type;
-    const selectedFileName = selectedFile.name;
     const isValidFileType = Object.is(selectedFileType, acceptedFileType);
     if (!isValidFileType) {
       Materialize.toast('Invalid File Type', 2000, 'cyan');
@@ -63,16 +61,14 @@ indexApp.controller('indexCtrl', ($scope) => {
     if (Object.keys($scope.myInvertedIndex.indexMap).length === 0) {
       Materialize.toast('Index a file first', 500, 'orange');
     }
-      const searchTerm = $('#search').val();
-      //console.log(searchTerm);
-      const searchResult =
+    const searchTerm = $('#search').val();
+    //const searchResult =
+      $scope.myInvertedIndex.searchIndex(searchTerm);
+    $scope.$apply(() => {
+      $scope.liveSearchResult =
         $scope.myInvertedIndex.searchIndex(searchTerm);
-      console.log(searchResult);
-      $scope.$apply(() => {
-        $scope.liveSearchResult =
-          $scope.myInvertedIndex.searchIndex(searchTerm);
-        $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
-      });
+      $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
+    });
   });
 });
 
