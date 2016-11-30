@@ -62,8 +62,7 @@ indexApp.controller('indexCtrl', ($scope) => {
       Materialize.toast('Index a file first', 500, 'orange');
     }
     const searchTerm = $('#search').val();
-    //const searchResult =
-      $scope.myInvertedIndex.searchIndex(searchTerm);
+    $scope.myInvertedIndex.searchIndex(searchTerm);
     $scope.$apply(() => {
       $scope.liveSearchResult =
         $scope.myInvertedIndex.searchIndex(searchTerm);
