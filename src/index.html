@@ -56,13 +56,25 @@
             </div>
             <div class="">
               <p class="checkbox" ng-repeat="file in indexedFiles">
-                <input type="checkbox" id="{{ file }}" disabled checked="true" />
+                <input type="checkbox" id="{{ file }}" 
+                ng-click="updateFilesToSearch($event)" value="{{ file }}"
+                />
                 <label for="{{ file }}">{{ file }} </label>
               </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+    <div class="col s6" ng-if="indexTable">
+      <h6> Index Table </h6>
+    </div>
+    <div class="col s6" ng-if="liveSearchResult">
+      <h6> Search Result </h6>
+          <p ng-if="liveSearchResult === false"> no result found </p>
+
+    </div>
     </div>
 
     <div class="row">
@@ -71,6 +83,46 @@
         <ul class="collapsible" data-collapsible="accordion">
 
           <li ng-repeat="(file, words) in indexTable">
+
+            <div class="collapsible-header">
+              <p>
+                <i class="material-icons">
+            keyboard_arrow_right
+            </i> {{ file }} </p>
+            </div>
+            <div class="collapsible-body">
+              <div>
+                <table class="striped bordered">
+                  <thead>
+                    <th> Words </th>
+                    <th ng-repeat="docId in getBookDocs(file)">
+                      {{ 'doc_'+docId }}
+                    </th>
+                    <thead>
+                      <tbody>
+                        <tr ng-repeat="(word, docs) in words">
+                          <td> {{ word }} </td>
+                          <td ng-repeat="docId in getBookDocs(file)">
+                            <i class="material-icons teal-text" ng-if="docs.includes(docId)">
+                      check
+                    </i>
+                            <i class="material-icons red-text" ng-if="docs.includes(docId) === false">
+                      close
+                    </i>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col s6 result-place">
+        <ul class="collapsible" data-collapsible="accordion">
+
+          <li ng-repeat="(file, words) in liveSearchResult">
 
             <div class="collapsible-header">
               <p>
@@ -106,39 +158,10 @@
             </div>
           </li>
         </ul>
+
       </div>
 
-      <div class="col s6 result-place">
-        <p class="" ng-if="liveSearchKeys.length > 0">
-          <span class="teal-text"> 
-                        <strong>
-                        {{ liveSearchKeys.length }} 
-                        </strong>
-                      </span> word(s) found
-        </p>
-
-
-        <div class="card teal" ng-repeat="(word, result) in liveSearchResult">
-          <div class="card-title"> {{ word }} </div>
-          <hr class="divider" />
-          <div class="" ng-repeat="(filename, docIDs) in result">
-            <p> File: <strong> {{ filename }} </strong>
-              <br />
-              <span class="" ng-repeat="thisId in docIDs"> 
-               {{ 'Document '+thisId }}  <br />
-                 {{ myInvertedIndex.files[filename][thisId].title
-                    .toLowerCase()
-                    .replace(word,  word.toUpperCase()) }}
-                    <br />
-                   {{ myInvertedIndex.files[filename][thisId].text
-                   .toLowerCase()
-                   .replace(word,  word.toUpperCase()) }}
-                   </p>
-            </span>
-          </div>
-        </div>
-      </div>
-
+    </div>
 
     </div>
 
@@ -153,6 +176,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/utils.js"></script>
   <script type="text/javascript" src="js/inverted-index.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   </div>
