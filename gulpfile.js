@@ -19,9 +19,10 @@ gulp.task('test', () => {
     server: 'jasmine',
     index: 'SpecRunner.html'
   });
+  gulp.watch(['./jasmine/spec/inverted-index-test.js'], browserSync.reload);
 });
 
-gulp.task('default', ['browser-sync'], () => {
+gulp.task('default', ['browser-sync', 'watch-test'], () => {
   const filesToWatch = ['**/*.js', '**/*.css', '**/*.html'];
   gulp.watch(filesToWatch).on('change', browserSync.reload);
 });
