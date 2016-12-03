@@ -1,3 +1,4 @@
+let searchThis = [];
 const indexApp = angular.module('indexApp', []);
 indexApp.controller('indexCtrl', ($scope) => {
   $scope.appName = 'Inverted Index';
@@ -8,6 +9,26 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.liveSearchResult = false;
   $scope.liveSearchKeys = false;
   $scope.indexedFiles = [];
+  $scope.searchInFiles = [];
+  $scope.updateFilesToSearch = (e) => {
+    const state = e.target.checked;
+    const value = e.target.value;
+    console.log(value, state);
+
+    if ($scope.searchInFiles.indexOf(value) === -1) {
+      if (state) {
+        $scope.searchInFiles.push(value);
+      }
+    } else {
+      const deleteIndex = $scope.searchInFiles.indexOf(value);
+      $scope.searchInFiles.splice(deleteIndex, 1);
+    }
+    // Because we need it realtime
+    const searchInputValue = document.getElementById('search').value;
+    $scopeliveSearchResult = 
+      $scope.myInvertedIndex.searchIndex(searchInputValue);
+  };
+
 
   $scope.getBookDocs = (fileName) => {
     const fileLength = $scope.myInvertedIndex.files[fileName].length;
@@ -16,21 +37,22 @@ indexApp.controller('indexCtrl', ($scope) => {
 
   $scope.indexFile = () => {
     $scope.myInvertedIndex.createIndex($scope.currentFileName);
-    $scope.indexTable = $scope.myInvertedIndex.indexMap;
+    $scope.indexTable = $scope.myInvertedIndex.indexTable;
     $scope.indexTableFiles.push($scope.currentFileName);
     $scope.indexedFiles.push($scope.currentFileName);
     $scope.currentFileName = '';
   };
 
+
   /* Validate JSON, read and store file  */
   $scope.readAndCheckFile = (selectedFile) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      const fileJSONContent = JSON.parse(fileReader.result);
-      if (!$scope.myInvertedIndex.isValidJSON(fileJSONContent)) {
+      const fileJsonContent = JSON.parse(fileReader.result);
+      if (!Utils.isValidJson(fileJsonContent)) {
         Materialize.toast('Invalid JSON file', 2000, 'red');
       } else {
-        $scope.myInvertedIndex.storeFile(selectedFile.name, fileJSONContent);
+        $scope.myInvertedIndex.files[selectedFile.name] = fileJsonContent;
         $scope.$apply(() => {
           $scope.currentFileName = selectedFile.name;
           $scope.indexTableFiles.push($scope.currentFileName);
@@ -40,6 +62,8 @@ indexApp.controller('indexCtrl', ($scope) => {
 
     fileReader.readAsText(selectedFile);
   };
+
+
 
 
   /* Handling file upload and extension checking */
@@ -58,14 +82,24 @@ indexApp.controller('indexCtrl', ($scope) => {
   });
 
   $('#search').on('keyup', () => {
-    if (Object.keys($scope.myInvertedIndex.indexMap).length === 0) {
+    if (Object.keys($scope.myInvertedIndex.indexTable).length === 0) {
       Materialize.toast('Index a file first', 500, 'orange');
     }
     const searchTerm = $('#search').val();
-    $scope.myInvertedIndex.searchIndex(searchTerm);
+    if ($scope.searchInFiles.length > 0) {
+      $scope.myInvertedIndex.searchIndex(searchTerm, $scope.searchInFiles);
+    } else {
+      $scope.myInvertedIndex.searchIndex(searchTerm);
+    }
     $scope.$apply(() => {
-      $scope.liveSearchResult =
+      if ($scope.searchInFiles.length > 0) {
+        $scope.liveSearchResult =
+        $scope.myInvertedIndex.searchIndex(searchTerm, $scope.searchInFiles);
+        $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
+      } else {
         $scope.myInvertedIndex.searchIndex(searchTerm);
+        $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
+      }
       $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
     });
   });
