@@ -15,22 +15,43 @@ The purpose of an inverted index is to allow fast full text searches, at a cost 
 
 * [Inverted index - elastic search](https://www.elastic.co/guide/en/elasticsearch/guide/current/inverted-index.html) 
 
+## Use Cases
+- You have large number of documents you need to perform search operations on.
+
+## Limitations
+- This app can only work for JSON files with members having `title` and `text` properties.
+
 
 ## Running Locally
 Follow the steps below to run the application locally on your machine.
-
  1. Clone the repository: `git clone <THIS_REPOSITORY_URL>`
  2. Enter into the apps directory by running `cd Checkpoint1-Inverted-Index`
  3. Install npm packages `npm install`
  4. Run the app by typing `gulp`
+ 
+## How to Use 
+Using this app is very simple and intuitive,
+  1. Start the deployed or local version of the application `npm start` as outlined above
+  2. Upload JSON files containing an array of object literals like the example below:
+  ```
 
+  [{
+    "title": "The Sugar Girl",
+    "text": "Ralia is lost in the forest and the whole village is in search for her, an innocent witch also accused"
+  }]
+  ```
+  3. Click on `Create Index` button after uploading and you will see a table containing mapped words and their document location
+  4. Use the search bar on the right side of the app display layout to perform search operations. 
+
+
+## Technology 
+  1. HTML5
+  2. Javascript (NODEJS Environment)
+  3. Jasmine for Testing
+
+
+## Testing 
+- After setting up the local version of the application, run `gulp test` to run test
 
 ## Preview
-![project screenshot](https://3.bp.blogspot.com/-bLKZAS35aC4/WD5kYYx2A2I/AAAAAAAAAbg/-1h5ZLTAVfQVex3y9Md-EU6BZhwgaOaJQCLcB/s1600/Screen%2BShot%2B2016-11-30%2Bat%2B6.30.11%2BAM.png "Inverted Index Preview")
-
-
-
-
-## Testing
-
-The tests are done using jasmine test runner that reports in the browser
+![project screenshot](https://4.bp.blogspot.com/-zz3Tl33-D9o/WEL2I6qsUCI/AAAAAAAAAb0/NHqtRoin7ZYm4W5HLw6QBtz7tIZyZbNbgCLcB/s1600/Screen%2BShot%2B2016-12-03%2Bat%2B5.41.40%2BPM.png "Inverted Index Preview")
