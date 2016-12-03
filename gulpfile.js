@@ -13,7 +13,7 @@ gulp.task('browser-sync', () => {
 });
 
 gulp.task('test', () => {
-  gulp.src('./src/js/inverted-index.js')
+  gulp.src(['./src/js/inverted-index.js', './src/js/utils.js'])
   .pipe(gulp.dest('./jasmine/spec'));
   browserSync.init({
     server: 'jasmine',
