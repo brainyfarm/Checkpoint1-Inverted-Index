@@ -1,34 +1,17 @@
-/* Sample Test Data */
-
-const book = [
-  {
-    title: 'Alice in Wonderland',
-    text: 'Alice falls into a rabbit hole and enters a world full of ...'
-  },
-
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring.',
-    text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit ...'
-  }
-];
-
-/* Test Setup */
+/* Test Setup3 */
 const myInvertedIndex = new InvertedIndex();
-myInvertedIndex.storeFile('book.json', book);
-myInvertedIndex.createIndex('book.json');
-const indexMap = myInvertedIndex.indexMap;
-const aliceSearchResult = { alice: { 'book.json': [0] } };
+myInvertedIndex.files['book.json'] = book;
 
 /* Test Suites */
-describe('Inverted Index Test Suites', () => {
+describe('Inverted Index Test', () => {
   describe('Read Book Data', () => {
     it('should return false when checking a bad JSON array', () => {
-      expect(myInvertedIndex.isValidJSON(''))
+      expect(Utils.isValidJson(emptyBook))
         .toBeFalsy();
     });
 
     it('should return true when validating a good JSON array', () => {
-      expect(myInvertedIndex.isValidJSON(book))
+      expect(Utils.isValidJson(book))
         .toBeTruthy();
     });
 
@@ -45,19 +28,20 @@ describe('Inverted Index Test Suites', () => {
 
   describe('Populate Data', () => {
     it('should ensure that index is created', () => {
-      expect(Object.hasOwnProperty.call(indexMap, 'book.json'))
+      expect(myInvertedIndex.createIndex('book.json'))
         .toBeTruthy();
     });
-    it('should ensure that index created is accurate', () => {
-      expect(indexMap['book.json'].alice)
+
+    it('should ensure that index of a file is returned accurrately', () => {
+      expect(myInvertedIndex.getIndex('book.json').alice)
       .toEqual([0]);
     });
   });
 
   describe('Search Index', () => {
     it('should return correct index of the search term', () => {
-      expect(myInvertedIndex.searchIndex('alice', ['book.json']))
-        .toEqual(aliceSearchResult);
+      expect(myInvertedIndex.searchIndex('alice'))
+        .toEqual({ 'book.json': { alice: [0] } });
     });
     it('should return false when no result is found', () => {
       expect(myInvertedIndex.searchIndex('impossibility'))
