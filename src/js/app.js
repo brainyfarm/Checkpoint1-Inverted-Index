@@ -25,7 +25,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     }
     // Because we need it realtime
     const searchInputValue = document.getElementById('search').value;
-    $scopeliveSearchResult = 
+    $scopeliveSearchResult =
       $scope.myInvertedIndex.searchIndex(searchInputValue);
   };
 
@@ -42,7 +42,6 @@ indexApp.controller('indexCtrl', ($scope) => {
     $scope.indexedFiles.push($scope.currentFileName);
     $scope.currentFileName = '';
   };
-
 
   /* Validate JSON, read and store file  */
   $scope.readAndCheckFile = (selectedFile) => {
@@ -62,9 +61,6 @@ indexApp.controller('indexCtrl', ($scope) => {
 
     fileReader.readAsText(selectedFile);
   };
-
-
-
 
   /* Handling file upload and extension checking */
   const fileInputField = document.getElementById('fileInput');
@@ -94,7 +90,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     $scope.$apply(() => {
       if ($scope.searchInFiles.length > 0) {
         $scope.liveSearchResult =
-        $scope.myInvertedIndex.searchIndex(searchTerm, $scope.searchInFiles);
+          $scope.myInvertedIndex.searchIndex(searchTerm, $scope.searchInFiles);
         $scope.liveSearchKeys = Object.keys($scope.liveSearchResult);
       } else {
         $scope.myInvertedIndex.searchIndex(searchTerm);

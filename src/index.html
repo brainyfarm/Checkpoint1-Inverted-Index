@@ -18,9 +18,7 @@
           <li>
             <a href="https://github.com/andela-oakinseye/checkpoint1-inverted-index">Follow on Github</a></li>
         </ul>
-
       </div>
-
     </nav>
   </header>
 
@@ -56,9 +54,7 @@
             </div>
             <div class="">
               <p class="checkbox" ng-repeat="file in indexedFiles">
-                <input type="checkbox" id="{{ file }}" 
-                ng-click="updateFilesToSearch($event)" value="{{ file }}"
-                />
+                <input type="checkbox" id="{{ file }}" ng-click="updateFilesToSearch($event)" value="{{ file }}" />
                 <label for="{{ file }}">{{ file }} </label>
               </p>
             </div>
@@ -67,14 +63,14 @@
       </div>
     </div>
     <div class="row">
-    <div class="col s6" ng-if="indexTable">
-      <h6> Index Table </h6>
-    </div>
-    <div class="col s6" ng-if="liveSearchResult">
-      <h6> Search Result </h6>
-          <p ng-if="liveSearchResult === false"> no result found </p>
+      <div class="col s6" ng-if="indexTable">
+        <h6> Index Table </h6>
+      </div>
+      <div class="col s6" ng-if="liveSearchResult">
+        <h6> Search Result </h6>
+        <p ng-if="liveSearchResult === false"> no result found </p>
 
-    </div>
+      </div>
     </div>
 
     <div class="row">
