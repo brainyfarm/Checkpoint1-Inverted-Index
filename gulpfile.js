@@ -1,19 +1,28 @@
-'use strict';
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
+/**
+ * @file Setup of gulp tasks
+ */
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
 
-gulp.task('browserSync', function () {
-    browserSync.init({
-        server: {
-            baseDir: 'src'
-        }
-    });
+gulp.task('browser-sync', () => {
+  browserSync.init({
+    server: './src/',
+    port: process.env.PORT || 3400,
+    open: false
+  });
 });
 
-gulp.task('start', ['browserSync'], function () {
-    // Reload browser when files change
-    gulp.watch('src/css/**/*.css', browserSync.reload);
-    gulp.watch('src/*.html', browserSync.reload);
-    gulp.watch('src/js/**/*.js', browserSync.reload);
-    gulp.watch('jasmine/spec/**/*.js', browserSync.reload);
+gulp.task('test', () => {
+  gulp.src(['./src/js/inverted-index.js', './src/js/utils.js'])
+    .pipe(gulp.dest('./jasmine/spec'));
+  browserSync.init({
+    server: 'jasmine',
+    index: 'SpecRunner.html'
+  });
+  gulp.watch(['./jasmine/spec/inverted-index-test.js'], browserSync.reload);
+});
+
+gulp.task('default', ['browser-sync', 'watch-test'], () => {
+  const filesToWatch = ['**/*.js', '**/*.css', '**/*.html'];
+  gulp.watch(filesToWatch).on('change', browserSync.reload);
 });

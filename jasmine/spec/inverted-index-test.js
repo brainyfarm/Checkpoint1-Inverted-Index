@@ -1,53 +1,51 @@
-/* Setups goes here */
-const sampleBookData = [
-  {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
+/* Test Setup3 */
+const myInvertedIndex = new InvertedIndex();
+myInvertedIndex.files['book.json'] = book;
 
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-];
-
-describe("Inverted Index Tests", () => {
-
-  describe("Read Book Data", () => {
-    myInvertedIndex = new InvertedIndex();
-    myInvertedIndex.createIndex(sampleBookData);
-
-    it("should check that JSON is not empty", () => {
-      expect(myInvertedIndex.isValidJson([])).toBeFalsy();
+/* Test Suites */
+describe('Inverted Index Test', () => {
+  describe('Read Book Data', () => {
+    it('should return false when checking a bad JSON array', () => {
+      expect(Utils.isValidJson(emptyBook))
+        .toBeFalsy();
     });
 
-    it("should check that content of JSON is valid", () => {
-      expect(myInvertedIndex.isValidJson(sampleBookData)).toBeTruthy();
+    it('should return true when validating a good JSON array', () => {
+      expect(Utils.isValidJson(book))
+        .toBeTruthy();
     });
 
-  });
-
-
-  describe("Populate Index", () => {
-    it("should return type of an object when index is properly created", () => {
-      expect(Object.keys(myInvertedIndex.getIndex()).length).toBeGreaterThan(0);
+    it('should return correct keys for files when file is saved', () => {
+      expect(Object.keys(myInvertedIndex.files))
+        .toEqual(['book.json']);
     });
 
-    it("should return the correct of a word if mapping is properly done", () => {
-      expect(myInvertedIndex.getIndex().alice).toEqual([0]);
+    it('should ensure the file content is saved accurrately', () => {
+      expect(myInvertedIndex.files['book.json'])
+        .toEqual(book);
     });
   });
 
-
-  describe("Search Index", () => {
-    it("should return an array of the correct document indices", () => {
-      expect(myInvertedIndex.searchIndex("alice")).toEqual({"alice":[0]});
+  describe('Populate Data', () => {
+    it('should ensure that index is created', () => {
+      expect(myInvertedIndex.createIndex('book.json'))
+        .toBeTruthy();
     });
 
-    it("should return correct result for multiple search term", () => {
-      expect(myInvertedIndex.searchIndex("alice powerful")).toEqual({"alice":[0], "powerful":[1]});
+    it('should ensure that index of a file is returned accurrately', () => {
+      expect(myInvertedIndex.getIndex('book.json').alice)
+      .toEqual([0]);
     });
-
   });
 
-})
+  describe('Search Index', () => {
+    it('should return correct index of the search term', () => {
+      expect(myInvertedIndex.searchIndex('alice'))
+        .toEqual({ 'book.json': { alice: [0] } });
+    });
+    it('should return false when no result is found', () => {
+      expect(myInvertedIndex.searchIndex('impossibility'))
+        .toBeFalsy();
+    });
+  });
+});

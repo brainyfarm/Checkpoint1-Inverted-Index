@@ -76,6 +76,8 @@ class InvertedIndex {
         }
       });
     });
+    console.log(this.result);
     return Object.keys(this.result).length > 0 ? this.result : false;
   }
+
 }

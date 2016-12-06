@@ -1,4 +1,4 @@
-[
+const book = [
   {
     "title": "Alice in Wonderland",
     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
@@ -13,3 +13,4 @@
     "text": "All animals are equal but some animals are equal than others - George Orwell"
   }
 ]
+
