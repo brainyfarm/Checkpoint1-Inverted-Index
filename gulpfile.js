@@ -13,16 +13,17 @@ gulp.task('browser-sync', () => {
 });
 
 gulp.task('test', () => {
-  gulp.src(['./src/js/inverted-index.js', './src/js/utils.js'])
-    .pipe(gulp.dest('./jasmine/spec'));
   browserSync.init({
-    server: 'jasmine',
-    index: 'SpecRunner.html'
+    server: {
+      baseDir: ['./jasmine', './src/js'],
+      port: 3120,
+      index: 'SpecRunner.html'
+    }
   });
   gulp.watch(['./jasmine/spec/inverted-index-test.js'], browserSync.reload);
 });
 
-gulp.task('default', ['browser-sync', 'watch-test'], () => {
+gulp.task('default', ['browser-sync'], () => {
   const filesToWatch = ['**/*.js', '**/*.css', '**/*.html'];
   gulp.watch(filesToWatch).on('change', browserSync.reload);
 });
