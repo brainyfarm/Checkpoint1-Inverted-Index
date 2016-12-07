@@ -13,8 +13,7 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.updateFilesToSearch = (e) => {
     const state = e.target.checked;
     const value = e.target.value;
-    console.log(value, state);
-
+    
     if ($scope.searchInFiles.indexOf(value) === -1) {
       if (state) {
         $scope.searchInFiles.push(value);
