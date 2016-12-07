@@ -1,4 +1,4 @@
-/* Test Setup3 */
+/* Test Setup */
 const myInvertedIndex = new InvertedIndex();
 myInvertedIndex.files['book.json'] = book;
 
