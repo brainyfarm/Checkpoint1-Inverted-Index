@@ -1,4 +1,4 @@
-/* Test Setup3 */
+/* Test Setup */
 const myInvertedIndex = new InvertedIndex();
 myInvertedIndex.files['book.json'] = book;
 
@@ -6,12 +6,12 @@ myInvertedIndex.files['book.json'] = book;
 describe('Inverted Index Test', () => {
   describe('Read Book Data', () => {
     it('should return false when checking a bad JSON array', () => {
-      expect(Utils.isValidJson(emptyBook))
+      expect(InvertedIndexHelper.isValidJson(emptyBook))
         .toBeFalsy();
     });
 
     it('should return true when validating a good JSON array', () => {
-      expect(Utils.isValidJson(book))
+      expect(InvertedIndexHelper.isValidJson(book))
         .toBeTruthy();
     });
 

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/andela-oakinseye/checkpoint1-inverted-index.svg?branch=dev-2)](https://travis-ci.org/andela-oakinseye/checkpoint1-inverted-index) [![Coverage Status Badge](https://coveralls.io/repos/github/andela-oakinseye/checkpoint1-inverted-index/badge.png?branch=dev-2)](https://coveralls.io/github/andela-oakinseye/checkpoint1-inverted-index?branch=dev-2/)
+[![Build Status](https://travis-ci.org/andela-oakinseye/checkpoint1-inverted-index.svg?branch=dev-2)](https://travis-ci.org/andela-oakinseye/checkpoint1-inverted-index) ![Coverage Status Badge](https://coveralls.io/repos/github/andela-oakinseye/checkpoint1-inverted-index/badge.svg?branch=develop)
 # Inverted Index - [https://search-index.herokuapp.com](https://search-index.herokuapp.com/) 
 
 

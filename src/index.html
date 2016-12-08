@@ -63,6 +63,20 @@
       </div>
     </div>
     <div class="row">
+      <div class="col s6 user-manual" ng-if="!indexTable">
+        <h5> Use Direction </h5>
+        <ul>
+          <li> 1. Upload a valid JSON file</li>
+          <li> 2. Ensure items in the file has
+            <pre><code>title</code></pre> and
+            <pre><code>text</code></pre> keys
+          </li>
+          <li> 3. Click on the Create Index button </li>
+          <li> 4. You can now view your index table as well as use the search feature </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
       <div class="col s6" ng-if="indexTable">
         <h6> Index Table </h6>
       </div>
@@ -172,7 +186,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/inverted-index-helper.js"></script>
   <script type="text/javascript" src="js/inverted-index.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
   </div>

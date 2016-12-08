@@ -13,7 +13,6 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.updateFilesToSearch = (e) => {
     const state = e.target.checked;
     const value = e.target.value;
-    console.log(value, state);
 
     if ($scope.searchInFiles.indexOf(value) === -1) {
       if (state) {
@@ -48,7 +47,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const fileJsonContent = JSON.parse(fileReader.result);
-      if (!Utils.isValidJson(fileJsonContent)) {
+      if (!InvertedIndexHelper.isValidJson(fileJsonContent)) {
         Materialize.toast('Invalid JSON file', 2000, 'red');
       } else {
         $scope.myInvertedIndex.files[selectedFile.name] = fileJsonContent;
