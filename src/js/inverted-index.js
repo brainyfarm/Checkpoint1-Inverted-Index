@@ -36,11 +36,11 @@ class InvertedIndex {
             this.indexTable[fileName][word] = [docIndex];
           }
         });
-        return true;
       }
     } else {
       return false;
     }
+    return true;
   }
 
   /**
