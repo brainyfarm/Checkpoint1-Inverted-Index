@@ -18,31 +18,4 @@ class InvertedIndexUtilities {
         word
       ));
   }
-
-  /**
-   * isValidJSON
-   * verifies if a JSON file is properly formatted
-   * @param {Object} jsonContent content of JSON to check for validity
-   * @return {Boolean} validity status of the JSON content.
-   */
-  static isValidJson(jsonContent) {
-    this.jsonContent = jsonContent;
-    if (typeof jsonContent !== 'object' || jsonContent.length === 0) {
-      return false;
-    }
-
-    try {
-      jsonContent.forEach((thisBook) => {
-        const hasTitle = Object.hasOwnProperty.call(thisBook, 'title');
-        const hasText = Object.hasOwnProperty.call(thisBook, 'text');
-        if (!(hasTitle && hasText)) {
-          return false;
-        }
-      });
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }
-
 }
