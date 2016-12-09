@@ -46,7 +46,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const fileJsonContent = JSON.parse(fileReader.result);
-      if (!InvertedIndexUtilities.isValidJson(fileJsonContent)) {
+      if (!$scope.myInvertedIndex.readBookData(fileJsonContent)) {
         Materialize.toast('Invalid JSON file', 2000, 'red');
       } else {
         $scope.myInvertedIndex.files[selectedFile.name] = fileJsonContent;
