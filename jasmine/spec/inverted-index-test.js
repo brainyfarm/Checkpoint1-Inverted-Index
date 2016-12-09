@@ -1,6 +1,10 @@
 /* Test Setup */
 const myInvertedIndex = new InvertedIndex();
+const book = require('./../books.json');
+const emptyBook = require('./../empty-book.json');
+
 myInvertedIndex.files['book.json'] = book;
+
 
 /* Test Suites */
 describe('Inverted Index Test', () => {
