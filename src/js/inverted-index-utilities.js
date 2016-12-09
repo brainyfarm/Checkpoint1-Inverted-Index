@@ -1,7 +1,7 @@
 /**
- * @class InvertedIndexHelper
+ * @class InvertedIndexUtilities
  */
-class InvertedIndexHelper {
+class InvertedIndexUtilities {
 
   /**
    * getCleanTokens
