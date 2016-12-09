@@ -1,4 +1,3 @@
-let searchThis = [];
 const indexApp = angular.module('indexApp', []);
 indexApp.controller('indexCtrl', ($scope) => {
   $scope.appName = 'Inverted Index';
@@ -47,7 +46,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const fileJsonContent = JSON.parse(fileReader.result);
-      if (!InvertedIndexHelper.isValidJson(fileJsonContent)) {
+      if (!InvertedIndexUtilities.isValidJson(fileJsonContent)) {
         Materialize.toast('Invalid JSON file', 2000, 'red');
       } else {
         $scope.myInvertedIndex.files[selectedFile.name] = fileJsonContent;
