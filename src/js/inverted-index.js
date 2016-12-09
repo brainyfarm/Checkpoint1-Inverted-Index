@@ -80,4 +80,30 @@ class InvertedIndex {
     });
     return Object.keys(this.result).length > 0 ? this.result : false;
   }
+
+  /**
+   * readBookData
+   * Reads content of JSON and checks for validity
+   * @param {Object} jsonContent content of JSON to check for validity
+   * @return {Boolean} validity status of the JSON content.
+   */
+  readBookData(jsonContent) {
+    this.jsonContent = jsonContent;
+    if (typeof jsonContent !== 'object' || jsonContent.length === 0) {
+      return false;
+    }
+
+    try {
+      jsonContent.forEach((thisBook) => {
+        const hasTitle = Object.hasOwnProperty.call(thisBook, 'title');
+        const hasText = Object.hasOwnProperty.call(thisBook, 'text');
+        if (!(hasTitle && hasText)) {
+          return false;
+        }
+      });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
 }
