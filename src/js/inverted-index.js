@@ -25,7 +25,7 @@ class InvertedIndex {
         const currentFileDoc = currentFileContent[docIndex];
         const docTitle = currentFileDoc.title;
         const docText = currentFileDoc.text;
-        const docToken = InvertedIndexHelper
+        const docToken = InvertedIndexUtilities
           .getCleanTokens(`${docText} ${docTitle}`);
         docToken.forEach((word) => {
           if (word in this.indexTable[fileName]) {
@@ -64,7 +64,8 @@ class InvertedIndex {
     // debugger;
     fileNames = fileNames || Object.keys(this.files);
     this.result = {};
-    const allSearchTerms = InvertedIndexHelper.getCleanTokens(searchTerms);
+    const allSearchTerms =
+      InvertedIndexUtilities.getCleanTokens(searchTerms);
     fileNames.forEach((currentFile) => {
       allSearchTerms.forEach((term) => {
         if (Object.hasOwnProperty.call(this.indexTable[currentFile], term)) {
