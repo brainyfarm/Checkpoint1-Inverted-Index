@@ -6,12 +6,12 @@ myInvertedIndex.files['book.json'] = book;
 describe('Inverted Index Test', () => {
   describe('Read Book Data', () => {
     it('should return false when checking a bad JSON array', () => {
-      expect(InvertedIndexHelper.isValidJson(emptyBook))
+      expect(InvertedIndexUtilities.isValidJson(emptyBook))
         .toBeFalsy();
     });
 
     it('should return true when validating a good JSON array', () => {
-      expect(InvertedIndexHelper.isValidJson(book))
+      expect(InvertedIndexUtilities.isValidJson(book))
         .toBeTruthy();
     });
 
