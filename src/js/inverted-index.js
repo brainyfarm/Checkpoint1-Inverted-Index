@@ -61,7 +61,6 @@ class InvertedIndex {
    * @returns {Object} A map of the search result
    */
   searchIndex(searchTerms, fileNames) {
-    // debugger;
     fileNames = fileNames || Object.keys(this.files);
     this.result = {};
     const allSearchTerms =
