@@ -1,4 +1,3 @@
-let searchThis = [];
 const indexApp = angular.module('indexApp', []);
 indexApp.controller('indexCtrl', ($scope) => {
   $scope.appName = 'Inverted Index';
@@ -11,11 +10,11 @@ indexApp.controller('indexCtrl', ($scope) => {
   $scope.indexedFiles = [];
   $scope.searchInFiles = [];
   $scope.updateFilesToSearch = (e) => {
-    const state = e.target.checked;
+    const isChecked = e.target.checked;
     const value = e.target.value;
 
     if ($scope.searchInFiles.indexOf(value) === -1) {
-      if (state) {
+      if (isChecked) {
         $scope.searchInFiles.push(value);
       }
     } else {
@@ -47,7 +46,7 @@ indexApp.controller('indexCtrl', ($scope) => {
     const fileReader = new FileReader();
     fileReader.onload = () => {
       const fileJsonContent = JSON.parse(fileReader.result);
-      if (!InvertedIndexHelper.isValidJson(fileJsonContent)) {
+      if (!$scope.myInvertedIndex.readBookData(fileJsonContent)) {
         Materialize.toast('Invalid JSON file', 2000, 'red');
       } else {
         $scope.myInvertedIndex.files[selectedFile.name] = fileJsonContent;

@@ -14,11 +14,9 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      "jasmine/books-data.js",
-      "jasmine/empty-book.js",
-      "src/js/inverted-index-helper.js",
+      "src/js/inverted-index-utilities.js",
       "src/js/inverted-index.js",
-      "jasmine/spec/inverted-index-test.js"
+      "jasmine/bundle.js"
     ],
 
     customLaunchers: {
@@ -37,6 +35,7 @@ module.exports = function (config) {
     // available preprocessors: 
     //https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      "src/js/inverted-index-utilities.js": "coverage",
       "src/js/inverted-index.js": "coverage"
     },
 
@@ -44,7 +43,7 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
 
-    reporters: ["progress", "coverage", "coveralls"],
+    reporters: ["progress", "coverage", "coveralls", "verbose"],
 
     coverageReporter: {
       type: "lcov",

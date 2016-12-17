@@ -2,6 +2,8 @@
  * @file Setup of gulp tasks
  */
 const gulp = require('gulp');
+const rename = require('gulp-rename');
+const browserify = require('gulp-browserify');
 const browserSync = require('browser-sync').create();
 
 gulp.task('browser-sync', () => {
@@ -11,6 +13,13 @@ gulp.task('browser-sync', () => {
     open: false,
     ghostMode: false
   });
+});
+
+gulp.task('scripts', () => {
+  gulp.src('jasmine/spec/inverted-index-test.js')
+  .pipe(browserify())
+  .pipe(rename('bundle.js'))
+  .pipe(gulp.dest('./jasmine'));
 });
 
 gulp.task('test', () => {
