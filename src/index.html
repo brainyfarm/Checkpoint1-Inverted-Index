@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html ng-app="indexApp">
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body ng-controller="indexCtrl">
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo"> {{ appName }}</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <a href="https://github.com/andela-oakinseye/checkpoint1-inverted-index">Follow on Github</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <section>
+    <div class="row">
+      <div class="col s12">
+        <div class="top">
+
+          <div class="col s6 file-action">
+            <h5> Upload document </h5>
+
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Choose File</span>
+                  <input type="file" id="fileInput">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Choose your file">
+                </div>
+              </div>
+            </form>
+            <button ng-show="currentFileName" class="btn waves waves-effect" ng-click="indexFile('{{ currentFileName }}')"> 
+                    Create Index
+            </button>
+          </div>
+
+          <div class="col s6">
+            <h5> Search </h5>
+            <div class="input-field">
+              <input type="search" id="search" placeholder="search">
+              <label for="search"></label>
+            </div>
+            <div class="">
+              <p class="checkbox" ng-repeat="file in indexedFiles">
+                <input type="checkbox" id="{{ file }}" ng-click="updateFilesToSearch($event)" value="{{ file }}" />
+                <label for="{{ file }}">{{ file }} </label>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6 user-manual" ng-if="!indexTable">
+        <h5> Use Direction </h5>
+        <ul>
+          <li> 1. Upload a valid JSON file</li>
+          <li> 2. Ensure items in the file has
+            <pre><code>title</code></pre> and
+            <pre><code>text</code></pre> keys
+          </li>
+          <li> 3. Click on the Create Index button </li>
+          <li> 4. You can now view your index table as well as use the search feature </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6" ng-if="indexTable">
+        <h6> Index Table </h6>
+      </div>
+      <div class="col s6" ng-if="liveSearchResult">
+        <h6> Search Result </h6>
+        <p ng-if="liveSearchResult === false"> no result found </p>
+
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col s6 index-table-place">
+        <ul class="collapsible" data-collapsible="accordion">
+
+          <li ng-repeat="(file, words) in indexTable">
+
+            <div class="collapsible-header">
+              <p>
+                <i class="material-icons">
+            keyboard_arrow_right
+            </i> {{ file }} </p>
+            </div>
+            <div class="collapsible-body">
+              <div>
+                <table class="striped bordered">
+                  <thead>
+                    <th> Words </th>
+                    <th ng-repeat="docId in getBookDocs(file)">
+                      {{ myInvertedIndex.files[file][docId].title }}
+                    </th>
+                    <thead>
+                      <tbody>
+                        <tr ng-repeat="(word, docs) in words">
+                          <td> {{ word }} </td>
+                          <td ng-repeat="docId in getBookDocs(file)">
+                            <i class="material-icons teal-text" ng-if="docs.includes(docId)">
+                      check
+                    </i>
+                            <i class="material-icons red-text" ng-if="docs.includes(docId) === false">
+                      close
+                    </i>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col s6 result-place">
+        <ul class="collapsible" data-collapsible="accordion">
+
+          <li ng-repeat="(file, words) in liveSearchResult">
+
+            <div class="collapsible-header">
+              <p>
+                <i class="material-icons">
+            keyboard_arrow_right
+            </i> {{ file }} </p>
+            </div>
+            <div class="collapsible-body">
+
+              <div>
+                <table class="striped bordered">
+                  <thead>
+                    <th> Words </th>
+                    <th ng-repeat="docId in getBookDocs(file)">
+                      {{ myInvertedIndex.files[file][docId].title }}
+                    </th>
+                    <thead>
+                      <tbody>
+                        <tr ng-repeat="(word, docs) in words">
+                          <td> {{ word }} </td>
+                          <td ng-repeat="docId in getBookDocs(file)">
+                            <i class="material-icons teal-text" ng-if="docs.includes(docId)">
+                      check
+                    </i>
+                            <i class="material-icons red-text" ng-if="docs.includes(docId) === false">
+                      close
+                    </i>
+                          </td>
+                        </tr>
+                      </tbody>
+                </table>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    <nav>
+      <p>&copy; Olawale Akinseye</p>
+    </nav>
+  </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/inverted-index-utilities.js"></script>
+  <script type="text/javascript" src="js/inverted-index.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  </div>
+</body>
+
+</html>
